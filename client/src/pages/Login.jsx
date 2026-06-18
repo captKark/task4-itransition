@@ -4,6 +4,9 @@ import { AuthContext } from '../context/AuthContext';
 import { Form, Button, Container, Card, Alert } from 'react-bootstrap';
 import axios from 'axios';
 
+// Render Backend URL
+const API_BASE_URL = 'https://task4-backend-itransition.onrender.com/';
+
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -16,7 +19,7 @@ function Login() {
         setError(''); 
 
         try {
-            const response = await axios.post('http://localhost:5000/api/login', {
+            const response = await axios.post(`${API_BASE_URL}/api/login`, {
                 email,
                 password
             });
@@ -37,7 +40,6 @@ function Login() {
                 <Card.Body>
                     <h2 className="text-center mb-4">Login</h2>
                     
-                    {/* If an error exists, render this Bootstrap alert banner */}
                     {error && <Alert variant="danger">{error}</Alert>}
 
                     <Form onSubmit={handleSubmit}>
@@ -63,7 +65,7 @@ function Login() {
                             />
                         </Form.Group>
 
-                        <Button variant="primary" type="submit" className="w-100">
+                        <Button variant="primary" type="submit" className="w-100 mb-3">
                             Sign In
                         </Button>
                         <p className="text-center small text-muted mb-0">

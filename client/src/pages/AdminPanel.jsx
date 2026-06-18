@@ -3,6 +3,9 @@ import { AuthContext } from '../context/AuthContext';
 import { Table, Button, Container, ButtonGroup, Form, Alert } from 'react-bootstrap';
 import axios from 'axios';
 
+// Render Backend URL
+const API_BASE_URL = 'https://task4-backend-itransition.onrender.com/';
+
 function AdminPanel() {
     const { token, logout, user } = useContext(AuthContext); 
     const [users, setUsers] = useState([]);
@@ -11,7 +14,10 @@ function AdminPanel() {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/users');
+            // Using central API base URL string
+            const response = await axios.get(`${API_BASE_URL}/api/users`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             if (response.data.success) {
                 setUsers(response.data.users);
             }
@@ -26,8 +32,10 @@ function AdminPanel() {
     };
 
     useEffect(() => {
-        fetchUsers();
-    }, []);
+        if (token) {
+            fetchUsers();
+        }
+    }, [token]);
 
     const handleAction = async (actionType) => {
         if (selectedIds.length === 0) {
@@ -38,8 +46,11 @@ function AdminPanel() {
         setError('');
 
         try {
-            const response = await axios.post(`http://localhost:5000/api/users/${actionType}`, {
+            // Updated endpoint destination URL matching cloud service paths
+            const response = await axios.post(`${API_BASE_URL}/api/users/${actionType}`, {
                 ids: selectedIds
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
             });
 
             if (response.data.success) {
@@ -94,7 +105,6 @@ function AdminPanel() {
 
             <div className="d-flex justify-content-between align-items-center mb-3 bg-light p-3 rounded shadow-sm">
                 <ButtonGroup>
-                    {/* Attach dynamic click handlers pointing to backend parameters */}
                     <Button variant="warning" className="text-white fw-bold" onClick={() => handleAction('block')}>Block</Button>
                     <Button variant="success" className="fw-bold ms-2" onClick={() => handleAction('unblock')}>Unblock</Button>
                     <Button variant="danger" className="fw-bold ms-2" onClick={() => handleAction('delete')}>Delete</Button>
