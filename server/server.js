@@ -15,6 +15,12 @@ app.use(express.json());
 app.use(cors({ origin: "https://task4-frontend-itransition.onrender.com/login" }));
 
 
+app.get('/', (req, res) => {
+    res.json({ message: "Task 4 API is live and operational." });
+});
+
+
+
 //---Test Route---//
 app .get('/test-route',  async (req, res) => {
     try{
@@ -223,7 +229,7 @@ app.post('/api/users/delete', verifyToken, async (req, res) => {
 //--------------------------------------------------------------------------------------------//
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, ()=>{
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on Port: ${PORT}`);
 });
 
