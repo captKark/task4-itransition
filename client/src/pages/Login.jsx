@@ -5,7 +5,7 @@ import { Form, Button, Container, Card, Alert } from 'react-bootstrap';
 import axios from 'axios';
 
 // Render Backend URL
-const API_BASE_URL = 'https://task4-backend-itransition.onrender.com/';
+const API_BASE_URL = 'https://task4-backend-itransition.onrender.com';
 
 function Login() {
     const [email, setEmail] = useState('');

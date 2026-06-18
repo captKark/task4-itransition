@@ -4,7 +4,7 @@ import { Table, Button, Container, ButtonGroup, Form, Alert } from 'react-bootst
 import axios from 'axios';
 
 // Render Backend URL
-const API_BASE_URL = 'https://task4-backend-itransition.onrender.com/';
+const API_BASE_URL = 'https://task4-backend-itransition.onrender.com';
 
 function AdminPanel() {
     const { token, logout, user } = useContext(AuthContext); 
