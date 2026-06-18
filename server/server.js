@@ -12,6 +12,8 @@ const app = express();
 // ---MiddleWare-- //
 app.use(cors());
 app.use(express.json());
+app.use(cors({ origin: "https://task4-frontend-itransition.onrender.com/login" }));
+
 
 //---Test Route---//
 app .get('/test-route',  async (req, res) => {
