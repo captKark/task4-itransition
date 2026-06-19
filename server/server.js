@@ -147,7 +147,7 @@ app.post('/api/login', async (req, res) => {
 //---Admin Endpoint: Get ALL users---//
 app.get('/api/users', verifyToken, async (req, res) => {
     try {
-        // data in the table must be sorted
+        // data in table sorted
         const users = await pool.query(
             `SELECT id, name, email, last_login, registration_time, status FROM users ORDER BY last_login DESC NULLS LAST`
         );

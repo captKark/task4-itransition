@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [loading, setLoading] = useState(true);
 
-  // If a token exists in local storage, load it in axios
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
@@ -17,22 +16,22 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("token");
       delete axios.defaults.headers.common["Authorization"];
     }
+    setLoading(false); 
   }, [token]);
 
-  // Login command
   const login = (userData, userToken) => {
     setToken(userToken);
     setUser(userData);
   };
 
-  // Logiut/block command
   const logout = () => {
     setToken(null);
-    setData(null);
+    setUser(null); 
   };
 
-  return (<AuthContext.Provider value={{ user, token, loading, login, logout, setUser, setLoading }}>
-    {children}
-  </AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={{ user, token, loading, login, logout, setUser, setLoading }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

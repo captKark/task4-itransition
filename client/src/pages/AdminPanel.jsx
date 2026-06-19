@@ -46,7 +46,6 @@ function AdminPanel() {
         setError('');
 
         try {
-            // Updated endpoint destination URL matching cloud service paths
             const response = await axios.post(`${API_BASE_URL}/api/users/${actionType}`, {
                 ids: selectedIds
             }, {
@@ -55,17 +54,19 @@ function AdminPanel() {
 
             if (response.data.success) {
                 const currentUserId = user?.id; 
+                const sessionShouldTerminate = (actionType === 'block' || actionType === 'delete') && selectedIds.includes(currentUserId);
+
+                setSelectedIds([]);
                 
-                if ((actionType === 'block' || actionType === 'delete') && selectedIds.includes(currentUserId)) {
+                if (sessionShouldTerminate) {
                     alert(`Your account has been ${actionType}ed. Logging out.`);
                     logout();
                     return;
                 }
 
-                setSelectedIds([]);
                 fetchUsers();
             }
-        } catch (err) {
+        }catch (err) {
             if (err.response?.status === 401 || err.response?.status === 403) {
                 alert(err.response.data.error || "Action denied. Account blocked or deleted.");
                 logout();
